@@ -1,10 +1,11 @@
 #pragma once
-#include "Variable.h"
+
 class Node
 {
 public:
 	Node(const unsigned char& Id);
+	~Node();
 	const unsigned char Id;
-	Variable Var;
+	int* Variable;
 	Node *Left, *Right, *Bottom;
 };

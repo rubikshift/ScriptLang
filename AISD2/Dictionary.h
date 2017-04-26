@@ -4,8 +4,9 @@ class Dictionary
 {
 public:
 	Dictionary(Node* Root);
+	~Dictionary();
 	void Insert(const char* Name, const int& Value);
-	Variable* Search(const char* Name);
+	int* Search(const char* Name);
 private:
 	Node* Root;
 	Node* Current;

@@ -3,8 +3,8 @@
 #include <cstdio>
 int main()
 {
-	auto root = new Node('i');
-	auto Dict = new Dictionary(root);
+	auto Root = new Node('a');
+	auto Dict = new Dictionary(Root);
 	Dict->Insert("iiii", 1);
 	Dict->Insert("abx", 4);
 	Dict->Insert("ahm", 3);
@@ -17,6 +17,8 @@ int main()
 	auto d = Dict->Search("zxy");
 	auto e = Dict->Search("a");
 	auto f = Dict->Search("jakasDlugaNazwaZmiennej");
-	printf("%d %d %d %d %d %d\n", a->GetValue(), b->GetValue(), c->GetValue(), d->GetValue(), e->GetValue(), f->GetValue());
+	printf("%d %d %d %d %d %d\n", *a, *b, *c, *d, *e, *f);
+	delete Root;
+	delete Dict;
 	system("pause");
 }

@@ -4,6 +4,10 @@ Dictionary::Dictionary(Node * Root) : Root(Root), Current(Root)
 {
 }
 
+Dictionary::~Dictionary()
+{
+}
+
 void Dictionary::Insert(const char * Name, const int & Value)
 {
 	Current = Root;
@@ -17,10 +21,10 @@ void Dictionary::Insert(const char * Name, const int & Value)
 	}
 	if (Current->Id != Name[NameSize - 1])
 		Current = BstInsert(Name[NameSize - 1]);
-	Current->Var = Value;
+	Current->Variable = new int(Value);
 }
 
-Variable* Dictionary::Search(const char * Name)
+int* Dictionary::Search(const char * Name)
 {
 	Current = Root;
 	size_t NameSize = strlen(Name);
@@ -35,7 +39,7 @@ Variable* Dictionary::Search(const char * Name)
 		return nullptr;
 	if (Current->Id != Name[NameSize - 1])
 		Current = BstSearch(Name[NameSize - 1]);
-	return &(Current->Var);
+	return Current->Variable;
 }
 
 Node * Dictionary::BstInsert(const char Id)
