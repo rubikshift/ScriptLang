@@ -24,23 +24,23 @@
 int main()
 {
 	auto Root = new Node('a');
-	auto Dict = new Dictionary(Root);
-	char Data[1000];
+	auto Memory = new Dictionary(Root);
+	char Data[1001];
 	Token* token;
 	int* var;
 	while (true)
 	{
 		scanf("%s", Data);
-		var = Dict->Search(Data);
+		var = Memory->Search(Data);
 		if (var != nullptr)
 			printf("%d\n", *var);
 		else
 			printf("%s\n", "Nul");
-		token = Token::Parse(Data, Dict);
+		token = Token::Parse(Data, Memory);
 	}
 		
 	system("pause");
 	delete token;
 	delete Root;
-	delete Dict;
+	delete Memory;
 }
