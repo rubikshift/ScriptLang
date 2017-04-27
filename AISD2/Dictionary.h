@@ -5,7 +5,7 @@ class Dictionary
 public:
 	Dictionary(Node* Root);
 	~Dictionary();
-	void Insert(const char* Name, const int& Value);
+	int* Insert(const char* Name, const int& Value);
 	int* Search(const char* Name);
 private:
 	Node* Root;

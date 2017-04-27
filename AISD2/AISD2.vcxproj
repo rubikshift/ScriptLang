@@ -139,14 +139,38 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="AndOperator.h" />
+    <ClInclude Include="AssignOperator.h" />
+    <ClInclude Include="BinaryOperator.h" />
+    <ClInclude Include="DecrementOperator.h" />
     <ClInclude Include="Dictionary.h" />
+    <ClInclude Include="DivisionOperator.h" />
+    <ClInclude Include="EqualOperator.h" />
+    <ClInclude Include="Expression.h" />
+    <ClInclude Include="GraterOperator.h" />
+    <ClInclude Include="GraterOrEqualOperator.h" />
+    <ClInclude Include="LessOperator.h" />
+    <ClInclude Include="LessOrEqualOperator.h" />
+    <ClInclude Include="ModuloOperator.h" />
+    <ClInclude Include="MultiplicationOperator.h" />
     <ClInclude Include="Node.h" />
+    <ClInclude Include="NotEqualOperator.h" />
+    <ClInclude Include="NotOperator.h" />
     <ClInclude Include="Operator.h" />
+    <ClInclude Include="OrOperator.h" />
+    <ClInclude Include="SubtractionOperator.h" />
+    <ClInclude Include="AdditionOperator.h" />
+    <ClInclude Include="Token.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="AdditionOperator.cpp" />
+    <ClCompile Include="AssignOperator.cpp" />
+    <ClCompile Include="BinaryOperator.cpp" />
     <ClCompile Include="Dictionary.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Node.cpp" />
+    <ClCompile Include="Operator.cpp" />
+    <ClCompile Include="Token.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
