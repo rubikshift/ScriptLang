@@ -34,6 +34,8 @@ int main()
 		var = Dict->Search(Data);
 		if (var != nullptr)
 			printf("%d\n", *var);
+		else
+			printf("%s\n", "Nul");
 		token = Token::Parse(Data, Dict);
 	}
 	system("pause");

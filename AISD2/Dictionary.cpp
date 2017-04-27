@@ -39,10 +39,10 @@ int* Dictionary::Search(const char * Name)
 			return nullptr;
 		Current = Current->Bottom;
 	}
+	if (Current != nullptr && Current->Id != Name[NameSize - 1])
+		Current = BstSearch(Name[NameSize - 1]);
 	if (Current == nullptr)
 		return nullptr;
-	if (Current->Id != Name[NameSize - 1])
-		Current = BstSearch(Name[NameSize - 1]);
 	return Current->Variable;
 }
 
