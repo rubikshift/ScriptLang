@@ -49,7 +49,7 @@ Token * Token::Parse(char * Expression, Dictionary* Memory)
 	{
 		Right[0] = '\0';
 		Right++;
-		Memory->Insert(Left, atoi(Right));
+		return new AssignOperator(Left, Parse(Right, Memory), Memory);
 	}
 	else if (Right = strstr(Expression, "|"));
 	else if (Right = strstr(Expression, "&"));

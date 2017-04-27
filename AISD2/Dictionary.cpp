@@ -8,7 +8,7 @@ Dictionary::~Dictionary()
 {
 }
 
-int* Dictionary::Insert(const char * Name, const int & Value)
+int* Dictionary::Insert(const char * Name, const int* Value)
 {
 	Current = Root;
 	size_t NameSize = strlen(Name);
@@ -21,10 +21,10 @@ int* Dictionary::Insert(const char * Name, const int & Value)
 	}
 	if (Current->Id != Name[NameSize - 1])
 		Current = BstInsert(Name[NameSize - 1]);
-	if (Current->Variable == nullptr)
-		Current->Variable = new int(Value);
-	else
-		*Current->Variable = Value;
+	if (Current->Variable == nullptr && Value != nullptr)
+		Current->Variable = new int(*Value);
+	else if(Value != nullptr)
+		*Current->Variable = *Value;
 	return Current->Variable;
 }
 

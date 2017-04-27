@@ -12,5 +12,4 @@ public:
 	bool IsConstant;
 protected:
 	int* value;
-	
 };

@@ -1,14 +1,9 @@
 #include "AssignOperator.h"
 
-AssignOperator::AssignOperator(Token * Left, Token * Right)
+
+AssignOperator::AssignOperator(const char* VariableName, Token* Right, Dictionary* Memory)
 {
-	this->Left = Left;
-	this->Right = Right;
-	int* lVal = Left->Value();
-	int* rVal = Right->Value();
-	*lVal = *rVal;
-	value = new int(*rVal);
-	IsConstant = false;
+	value = Memory->Insert(VariableName, Right->Value());
 }
 
 int * AssignOperator::Value()

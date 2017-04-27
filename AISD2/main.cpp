@@ -1,4 +1,3 @@
-
 #include <cstdlib>
 #include <cstdio>
 #include "Token.h"
@@ -21,30 +20,23 @@
 #include "OrOperator.h"
 #include "SubtractionOperator.h"
 #include "Dictionary.h"
+
 int main()
 {
 	auto Root = new Node('a');
 	auto Dict = new Dictionary(Root);
 	char Data[1000];
-	Dict->Insert("iiii", 1);
-	/*Dict->Insert("abx", 4);
-	Dict->Insert("ahm", 3);
-	Dict->Insert("zxy", 2);
-	Dict->Insert("a", 5);
-	Dict->Insert("jakasDlugaNazwaZmiennej", 123456);
-	auto a = Dict->Search("iiii");
-	auto b = Dict->Search("abx");
-	auto c = Dict->Search("ahm");
-	auto d = Dict->Search("zxy");
-	auto e = Dict->Search("a");
-	auto f = Dict->Search("jakasDlugaNazwaZmiennej");
-	printf("%d %d %d %d %d %d\n", *a, *b, *c, *d, *e, *f);
-	delete Root;
-	delete Dict;*/
-	scanf("%s", Data);
-	auto t = Token::Parse(Data, Dict);
-	//auto i = t->Value();
-	auto e = Dict->Search("test");
-	printf("%d\n", *e);
+	Token* token;
+	int* var;
+	while (true)
+	{
+		scanf("%s", Data);
+		var = Dict->Search(Data);
+		if (var != nullptr)
+			printf("%d\n", *var);
+		token = Token::Parse(Data, Dict);
+	}
 	system("pause");
+	delete Root;
+	delete Dict;
 }

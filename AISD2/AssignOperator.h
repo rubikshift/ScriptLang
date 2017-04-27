@@ -1,9 +1,9 @@
 #pragma once
 #include "BinaryOperator.h"
-
-class AssignOperator : public BinaryOperator
+#include "Dictionary.h"
+class AssignOperator : public Operator
 {
 public:
-	AssignOperator(Token* Left, Token* Right);
+	AssignOperator(const char* VariableName, Token* Right, Dictionary* Memory);
 	virtual int* Value() override;
 };
