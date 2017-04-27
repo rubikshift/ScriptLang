@@ -47,15 +47,46 @@ int* Token::Value()
 	return value;
 }
 
+Token* ParseAddition(char* Left, char* Right, Dictionary* Memory)
+{
+	Right[0] = '\0';
+	Right++;
+	return new AdditionOperator(Token::Parse(Left, Memory), Token::Parse(Right, Memory));
+}
+
+Token* ParseAssigment(char* Left, char* Right, Dictionary* Memory)
+{
+	Right[0] = '\0';
+	Right++;
+	return new AssignOperator(Left, Token::Parse(Right, Memory), Memory);
+}
+
+Token* ParseSubtraction(char* Left, char* Right, Dictionary* Memory)
+{
+	Right[0] = '\0';
+	Right++;
+	return new SubtractionOperator(Token::Parse(Left, Memory), Token::Parse(Right, Memory));
+}
+
+Token* ParseDivision(char* Left, char* Right, Dictionary* Memory)
+{
+	Right[0] = '\0';
+	Right++;
+	return new DivisionOperator(Token::Parse(Left, Memory), Token::Parse(Right, Memory));
+}
+
+Token* ParseMuliplication(char* Left, char* Right, Dictionary* Memory)
+{
+	Right[0] = '\0';
+	Right++;
+	return new MultiplicationOperator(Token::Parse(Left, Memory), Token::Parse(Right, Memory));
+}
+
 Token * Token::Parse(char * Expression, Dictionary* Memory)
 {
 	char* Left = Expression, *Right;
 	if (Right = strstr(Expression, "="))
-	{
-		Right[0] = '\0';
-		Right++;
-		return new AssignOperator(Left, Parse(Right, Memory), Memory);
-	}
+		return ParseAssigment(Left, Right, Memory);
 	else if (Right = strstr(Expression, "|"));
 	else if (Right = strstr(Expression, "&"));
 	else if (Right = strstr(Expression, "!="));
@@ -65,29 +96,13 @@ Token * Token::Parse(char * Expression, Dictionary* Memory)
 	else if (Right = strstr(Expression, "<="));
 	else if (Right = strstr(Expression, ">="));
 	else if (Right = strstr(Expression, "+"))
-	{
-		Right[0] = '\0';
-		Right++;
-		return new AdditionOperator(Parse(Left, Memory), Parse(Right, Memory));
-	}
+		return ParseAddition(Left, Right, Memory);
 	else if (Right = strstr(Expression, "-"))
-	{
-		Right[0] = '\0';
-		Right++;
-		return new SubtractionOperator(Parse(Left, Memory), Parse(Right, Memory));
-	}
+		return ParseSubtraction(Left, Right, Memory);
 	else if (Right = strstr(Expression, "/"))
-	{
-		Right[0] = '\0';
-		Right++;
-		return new DivisionOperator(Parse(Left, Memory), Parse(Right, Memory));
-	}
+		return ParseDivision(Left, Right, Memory);
 	else if (Right = strstr(Expression, "*"))
-	{
-		Right[0] = '\0';
-		Right++;
-		return new MultiplicationOperator(Parse(Left, Memory), Parse(Right, Memory));
-	}
+		return ParseMuliplication(Left, Right, Memory);
 	else if (Right = strstr(Expression, "%"));
 	else if (Right = strstr(Expression, "!"));
 	else if (Expression[0] >= '0' && Expression[0] <= '9')
