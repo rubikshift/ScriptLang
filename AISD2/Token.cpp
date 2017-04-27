@@ -76,7 +76,12 @@ Token * Token::Parse(char * Expression, Dictionary* Memory)
 		Right++;
 		return new SubtractionOperator(Parse(Left, Memory), Parse(Right, Memory));
 	}
-	else if (Right = strstr(Expression, "/"));
+	else if (Right = strstr(Expression, "/"))
+	{
+		Right[0] = '\0';
+		Right++;
+		return new DivisionOperator(Parse(Left, Memory), Parse(Right, Memory));
+	}
 	else if (Right = strstr(Expression, "*"))
 	{
 		Right[0] = '\0';

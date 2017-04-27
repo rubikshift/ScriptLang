@@ -3,5 +3,7 @@
 
 class DivisionOperator : public BinaryOperator
 {
-
+public:
+	DivisionOperator(Token* Left, Token* Right);
+	virtual int* Value();
 };
