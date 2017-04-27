@@ -168,8 +168,10 @@
     <ClCompile Include="BinaryOperator.cpp" />
     <ClCompile Include="Dictionary.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MultiplicationOperator.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="Operator.cpp" />
+    <ClCompile Include="SubtractionOperator.cpp" />
     <ClCompile Include="Token.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

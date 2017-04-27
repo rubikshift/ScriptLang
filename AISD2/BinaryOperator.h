@@ -5,6 +5,7 @@ class BinaryOperator : public Operator
 {
 public:
 	BinaryOperator();
+	virtual ~BinaryOperator();
 	virtual int* Value() = 0;
 protected:
 	Token* Left;

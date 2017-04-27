@@ -19,7 +19,6 @@
 #include "NotOperator.h"
 #include "OrOperator.h"
 #include "SubtractionOperator.h"
-
 Token::Token() : value(nullptr), IsConstant(false)
 {
 }
@@ -35,6 +34,12 @@ Token::Token(int Value) : IsConstant(true)
 
 Token::~Token()
 {
+	if (value != nullptr && IsConstant)
+	{
+		delete value;
+		value = nullptr;
+	}
+
 }
 
 int* Token::Value()
@@ -65,9 +70,19 @@ Token * Token::Parse(char * Expression, Dictionary* Memory)
 		Right++;
 		return new AdditionOperator(Parse(Left, Memory), Parse(Right, Memory));
 	}
-	else if (Right = strstr(Expression, "-"));
+	else if (Right = strstr(Expression, "-"))
+	{
+		Right[0] = '\0';
+		Right++;
+		return new SubtractionOperator(Parse(Left, Memory), Parse(Right, Memory));
+	}
 	else if (Right = strstr(Expression, "/"));
-	else if (Right = strstr(Expression, "*"));
+	else if (Right = strstr(Expression, "*"))
+	{
+		Right[0] = '\0';
+		Right++;
+		return new MultiplicationOperator(Parse(Left, Memory), Parse(Right, Memory));
+	}
 	else if (Right = strstr(Expression, "%"));
 	else if (Right = strstr(Expression, "!"));
 	else if (Expression[0] >= '0' && Expression[0] <= '9')

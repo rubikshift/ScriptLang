@@ -1,7 +1,9 @@
 #pragma once
 #include "BinaryOperator.h"
 
-class SubtractionOperator : public Operator
+class SubtractionOperator : public BinaryOperator
 {
-
+public:
+	SubtractionOperator(Token* Left, Token* Right);
+	virtual int* Value() override;
 };

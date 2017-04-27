@@ -28,8 +28,8 @@ int main()
 	char Data[1000];
 	Token* token;
 	int* var;
-	while (true)
-	{
+	/*while (true)
+	{*/
 		scanf("%s", Data);
 		var = Dict->Search(Data);
 		if (var != nullptr)
@@ -37,7 +37,8 @@ int main()
 		else
 			printf("%s\n", "Nul");
 		token = Token::Parse(Data, Dict);
-	}
+	/*}*/
+		delete token;
 	system("pause");
 	delete Root;
 	delete Dict;

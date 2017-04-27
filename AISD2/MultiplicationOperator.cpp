@@ -1,6 +1,5 @@
-#include "AdditionOperator.h"
-
-AdditionOperator::AdditionOperator(Token * Left, Token * Right) 
+#include "MultiplicationOperator.h"
+MultiplicationOperator::MultiplicationOperator(Token* Left, Token* Right)
 {
 	this->Left = Left;
 	this->Right = Right;
@@ -12,12 +11,11 @@ AdditionOperator::AdditionOperator(Token * Left, Token * Right)
 		if (rVal == nullptr || lVal == nullptr)
 			value = nullptr;
 		else
-			value = new int(*lVal + *rVal);
+			value = new int(*lVal * *rVal);
 	}
 	else IsConstant = false;
 }
-
-int * AdditionOperator::Value()
+int * MultiplicationOperator::Value()
 {
 	if (IsConstant)
 		return value;
@@ -25,5 +23,5 @@ int * AdditionOperator::Value()
 	int* lVal = Left->Value();
 	if (rVal == nullptr || lVal == nullptr)
 		return nullptr;
-	else return new int(*lVal + *rVal);
+	else return new int(*lVal * *rVal);
 }

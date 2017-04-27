@@ -25,6 +25,11 @@ int* Dictionary::Insert(const char * Name, const int* Value)
 		Current->Variable = new int(*Value);
 	else if(Value != nullptr)
 		*Current->Variable = *Value;
+	else if (Value == nullptr)
+	{
+		delete Current->Variable;
+		Current->Variable = nullptr;
+	}
 	return Current->Variable;
 }
 
