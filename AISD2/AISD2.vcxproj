@@ -168,6 +168,7 @@
     <ClCompile Include="BinaryOperator.cpp" />
     <ClCompile Include="Dictionary.cpp" />
     <ClCompile Include="DivisionOperator.cpp" />
+    <ClCompile Include="EqualOperator.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MultiplicationOperator.cpp" />
     <ClCompile Include="Node.cpp" />

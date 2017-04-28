@@ -81,16 +81,24 @@ Token* ParseMuliplication(char* Left, char* Right, Dictionary* Memory)
 	Right++;
 	return new MultiplicationOperator(Token::Parse(Left, Memory), Token::Parse(Right, Memory));
 }
+Token* ParseEquality(char* Left, char* Right, Dictionary* Memory)
+{
+	Right[0] = '\0';
+	Right[1] = '\0';
+	Right+=2;
+	return new EqualOperator(Token::Parse(Left, Memory), Token::Parse(Right, Memory));
+}
 
-Token * Token::Parse(char * Expression, Dictionary* Memory)
+Token * Token::Parse(char * Expression, Dictionary* Memory, int Prioryty = 0)
 {
 	char* Left = Expression, *Right;
-	if (Right = strstr(Expression, "="))
+	if (Prioryty == 0 && (Right = strstr(Expression, "=")))
 		return ParseAssigment(Left, Right, Memory);
-	else if (Right = strstr(Expression, "|"));
+	else if ((Right = strstr(Expression, "|")));
 	else if (Right = strstr(Expression, "&"));
 	else if (Right = strstr(Expression, "!="));
-	else if (Right = strstr(Expression, "=="));
+	else if (Right = strstr(Expression, "=="))
+		return ParseEquality(Left, Right, Memory);
 	else if (Right = strstr(Expression, "<"));
 	else if (Right = strstr(Expression, ">"));
 	else if (Right = strstr(Expression, "<="));

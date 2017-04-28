@@ -9,5 +9,6 @@ AssignOperator::AssignOperator(const char* VariableName, Token* Right, Dictionar
 
 int * AssignOperator::Value()
 {
+	value = Right->Value();
 	return value;
 }

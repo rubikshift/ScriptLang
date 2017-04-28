@@ -8,7 +8,7 @@ public:
 	Token(int Value);
 	virtual ~Token();
 	virtual int* Value();
-	static Token* Parse(char* Expression, Dictionary* Memory);
+	static Token* Parse(char* Expression, Dictionary* Memory, int Prioryty);
 	bool IsConstant;
 protected:
 	int* value;
