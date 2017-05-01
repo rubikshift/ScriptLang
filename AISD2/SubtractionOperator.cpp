@@ -1,14 +1,7 @@
 #include "SubtractionOperator.h"
 
-SubtractionOperator::SubtractionOperator(Token * Left, Token * Right)
+SubtractionOperator::SubtractionOperator(Token * Left, Token * Right) : BinaryOperator(Left, Right)
 {
-	this->Left = Left;
-	this->Right = Right;
-	int* rVal = Right->Value();
-	int* lVal = Left->Value();
-	if (Left->IsConstant && Right->IsConstant)
-		IsConstant = true;
-	else IsConstant = false;
 }
 
 int * SubtractionOperator::Value()

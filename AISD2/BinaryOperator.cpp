@@ -2,6 +2,11 @@
 BinaryOperator::BinaryOperator() : Left(nullptr), Operator()
 {
 }
+BinaryOperator::BinaryOperator(Token* Left, Token* Right)
+{
+	this->Left = Left;
+	this->Right = Right;
+}
 
 BinaryOperator::~BinaryOperator()
 {

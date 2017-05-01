@@ -1,13 +1,7 @@
 #include "AdditionOperator.h"
 
-AdditionOperator::AdditionOperator(Token * Left, Token * Right) 
+AdditionOperator::AdditionOperator(Token * Left, Token * Right) : BinaryOperator(Left, Right)
 {
-	this->Left = Left;
-	this->Right = Right;
-	int* rVal = Right->Value();
-	int* lVal = Left->Value();
-	if (Left->IsConstant && Right->IsConstant)
-		IsConstant = true;
 }
 
 int * AdditionOperator::Value()

@@ -1,10 +1,10 @@
-#include "EqualOperator.h"
+#include "OrOperator.h"
 
-EqualOperator::EqualOperator(Token * Left, Token * Right) : BinaryOperator(Left, Right)
+OrOperator::OrOperator(Token* Left, Token* Right) : BinaryOperator(Left, Right)
 {
 }
 
-int * EqualOperator::Value()
+int* OrOperator::Value()
 {
 	int* rVal = Right->Value();
 	int* lVal = Left->Value();
@@ -12,7 +12,7 @@ int * EqualOperator::Value()
 		return nullptr;
 	else
 	{
-		if (*lVal == *rVal)
+		if (*lVal || *rVal)
 			return new int(0);
 		else
 			return nullptr;

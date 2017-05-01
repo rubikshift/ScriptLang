@@ -4,6 +4,7 @@ class Operator : public Token
 {
 public:
 	Operator();
+	Operator(Token* Right);
 	virtual ~Operator();
 	virtual int* Value() = 0;
 protected:
