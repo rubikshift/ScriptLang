@@ -4,6 +4,6 @@
 class DecrementOperator : public Operator
 {
 public:
-	DecrementOperator(Token* Right);
+	DecrementOperator(Token* Right, int* Limit);
 	virtual int* Value();
 };

@@ -4,6 +4,6 @@
 class AndOperator : public BinaryOperator
 {
 public:
-	AndOperator(Token* Left, Token* Right);
+	AndOperator(Token* Left, Token* Right, int* Limit);
 	virtual int* Value();
 };

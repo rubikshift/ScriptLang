@@ -2,19 +2,15 @@
 BinaryOperator::BinaryOperator() : Left(nullptr), Operator()
 {
 }
-BinaryOperator::BinaryOperator(Token* Left, Token* Right)
+BinaryOperator::BinaryOperator(Token* Left, Token* Right, int* Limit)
 {
 	this->Left = Left;
 	this->Right = Right;
+	this->Limit = Limit;
 }
 
 BinaryOperator::~BinaryOperator()
 {
-	if (value != nullptr)
-	{
-		delete value;
-		value = nullptr;
-	}
 	if (Left != nullptr)
 	{
 		delete Left;

@@ -3,18 +3,14 @@ Operator::Operator() : Right(nullptr), Token()
 {
 }
 
-Operator::Operator(Token* Right)
+Operator::Operator(Token* Right, int* Limit)
 {
 	this->Right = Right;
+	this->Limit = Limit;
 }
 
 Operator::~Operator()
 {
-	if (value != nullptr)
-	{
-		delete value;
-		value = nullptr;
-	}
 	if (Right != nullptr)
 	{
 		delete Right;

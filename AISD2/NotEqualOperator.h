@@ -4,6 +4,6 @@
 class NotEqualOperator : public BinaryOperator
 {
 public:
-	NotEqualOperator(Token* Left, Token* Right);
+	NotEqualOperator(Token* Left, Token* Right, int* Limit);
 	virtual int* Value();
 };

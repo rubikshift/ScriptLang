@@ -4,6 +4,6 @@
 class LessOrEqualOperator : public BinaryOperator
 {
 public:
-	LessOrEqualOperator(Token* Left, Token* Right);
+	LessOrEqualOperator(Token* Left, Token* Right, int* Limit);
 	virtual int* Value();
 };

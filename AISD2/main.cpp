@@ -1,5 +1,6 @@
 #include <cstdlib>
 #include <cstdio>
+#include <cstring>
 #include "Token.h"
 #include "Operator.h"
 #include "BinaryOperator.h"
@@ -25,20 +26,38 @@ int main()
 {
 	auto Root = new Node('a');
 	auto Memory = new Dictionary(Root);
-	char Data[1001];
+	char Data[1000];
+	char *tmp, *Variables = new char[1000];
+	int Limit = 0, *Value;
 	Token* token;
 	int* var;
-	while (true)
+	fgets(Data, 1000, stdin);
+	sscanf(Data, "%d", &Limit);
+	fgets(Variables, 1000, stdin);
+	while(Limit > 0)
 	{
 		scanf("%s", Data);
-		var = Memory->Search(Data);
-		if (var != nullptr)
-			printf("%d\n", *var);
-		else
-			printf("%s\n", "Nul");
-		token = Token::Parse(Data, Memory);
+		token = Token::Parse(Data, Memory, &Limit);
+		token->Value();
 	}
-		
+
+	tmp = strstr(Variables, "\n");
+	tmp[0] = 0;
+	while (Variables != NULL)
+	{
+		tmp = Variables;
+		Variables = strstr(Variables, " ");
+		if (Variables != NULL)
+		{
+			Variables[0] = 0;
+			Variables++;
+		}
+		Value = Memory->Search(tmp);
+		if (Value != nullptr)
+			printf("%s %d\n", tmp, *Value);
+		else
+			printf("%s %s\n", tmp, "Nul");
+	}
 	system("pause");
 	delete token;
 	delete Root;

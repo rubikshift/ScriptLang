@@ -5,7 +5,7 @@ class BinaryOperator : public Operator
 {
 public:
 	BinaryOperator();
-	BinaryOperator(Token* Left, Token* Right);
+	BinaryOperator(Token* Left, Token* Right, int* Limit);
 	virtual ~BinaryOperator();
 	virtual int* Value() = 0;
 protected:

@@ -4,6 +4,6 @@
 class SubtractionOperator : public BinaryOperator
 {
 public:
-	SubtractionOperator(Token* Left, Token* Right);
+	SubtractionOperator(Token* Left, Token* Right, int* Limit);
 	virtual int* Value() override;
 };

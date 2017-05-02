@@ -4,6 +4,6 @@
 class GraterOrEqualOperator : public BinaryOperator
 {
 public:
-	GraterOrEqualOperator(Token* Left, Token* Right);
+	GraterOrEqualOperator(Token* Left, Token* Right, int* Limit);
 	virtual int* Value();
 };

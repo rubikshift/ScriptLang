@@ -4,6 +4,6 @@
 class NotOperator : public Operator
 {
 public:
-	NotOperator(Token* Right);
+	NotOperator(Token* Right, int* Limit);
 	virtual int* Value();
 };

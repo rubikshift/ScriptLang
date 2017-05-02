@@ -1,9 +1,12 @@
 #include "GraterOperator.h"
-GraterOperator::GraterOperator(Token* Left, Token* Right) : BinaryOperator(Left, Right)
+GraterOperator::GraterOperator(Token* Left, Token* Right, int* Limit) : BinaryOperator(Left, Right, Limit)
 {
 }
 int* GraterOperator::Value()
 {
+	if (*Limit <= 0)
+		return nullptr;
+	(*Limit)--;
 	int* rVal = Right->Value();
 	int* lVal = Left->Value();
 	if (rVal == nullptr || lVal == nullptr)

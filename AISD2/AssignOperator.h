@@ -4,6 +4,10 @@
 class AssignOperator : public Operator
 {
 public:
-	AssignOperator(const char* VariableName, Token* Right, Dictionary* Memory);
+	AssignOperator(const char* VariableName, Token* Right, Dictionary* Memory, int* Limit);
 	virtual int* Value() override;
+private:
+	int* value;
+	char* VariableName;
+	Dictionary* Memory;
 };
