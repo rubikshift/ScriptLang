@@ -3,5 +3,7 @@
 
 class LessOrEqualOperator : public BinaryOperator
 {
-
+public:
+	LessOrEqualOperator(Token* Left, Token* Right);
+	virtual int* Value();
 };

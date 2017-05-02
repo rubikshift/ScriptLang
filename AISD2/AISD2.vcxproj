@@ -164,18 +164,23 @@
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="AdditionOperator.cpp" />
+    <ClCompile Include="AndOperator.cpp" />
     <ClCompile Include="AssignOperator.cpp" />
     <ClCompile Include="BinaryOperator.cpp" />
+    <ClCompile Include="DecrementOperator.cpp" />
     <ClCompile Include="Dictionary.cpp" />
     <ClCompile Include="DivisionOperator.cpp" />
     <ClCompile Include="EqualOperator.cpp" />
     <ClCompile Include="GraterOperator.cpp" />
+    <ClCompile Include="GraterOrEqualOperator.cpp" />
     <ClCompile Include="LessOperator.cpp" />
+    <ClCompile Include="LessOrEqualOperator.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="ModuloOperator.cpp" />
     <ClCompile Include="MultiplicationOperator.cpp" />
     <ClCompile Include="Node.cpp" />
     <ClCompile Include="NotEqualOperator.cpp" />
+    <ClCompile Include="NotOperator.cpp" />
     <ClCompile Include="Operator.cpp" />
     <ClCompile Include="OrOperator.cpp" />
     <ClCompile Include="SubtractionOperator.cpp" />

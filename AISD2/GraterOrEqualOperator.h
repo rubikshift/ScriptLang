@@ -3,5 +3,7 @@
 
 class GraterOrEqualOperator : public BinaryOperator
 {
-
+public:
+	GraterOrEqualOperator(Token* Left, Token* Right);
+	virtual int* Value();
 };

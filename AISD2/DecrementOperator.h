@@ -3,5 +3,7 @@
 
 class DecrementOperator : public Operator
 {
-
+public:
+	DecrementOperator(Token* Right);
+	virtual int* Value();
 };

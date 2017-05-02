@@ -47,13 +47,6 @@ int* Token::Value()
 	return value;
 }
 
-Token* ParseAddition(char* Left, char* Right, Dictionary* Memory)
-{
-	Right[0] = '\0';
-	Right++;
-	return new AdditionOperator(Token::Parse(Left, Memory, 5), Token::Parse(Right, Memory, 5));
-}
-
 Token* ParseAssigment(char* Left, char* Right, Dictionary* Memory)
 {
 	Right[0] = '\0';
@@ -61,11 +54,81 @@ Token* ParseAssigment(char* Left, char* Right, Dictionary* Memory)
 	return new AssignOperator(Left, Token::Parse(Right, Memory), Memory);
 }
 
-Token* ParseSubtraction(char* Left, char* Right, Dictionary* Memory)
+Token* ParseOr(char* Left, char* Right, Dictionary* Memory)
 {
 	Right[0] = '\0';
 	Right++;
-	return new SubtractionOperator(Token::Parse(Left, Memory, 5), Token::Parse(Right, Memory, 5));
+	return new OrOperator(Token::Parse(Left, Memory, 1), Token::Parse(Right, Memory, 1));
+}
+
+Token* ParseAnd(char* Left, char* Right, Dictionary* Memory)
+{
+	Right[0] = '\0';
+	Right++;
+	return new AndOperator(Token::Parse(Left, Memory, 2), Token::Parse(Right, Memory, 2));
+}
+
+Token* ParseEquality(char* Left, char* Right, Dictionary* Memory)
+{
+	Right[0] = '\0';
+	Right[1] = '\0';
+	Right += 2;
+	return new EqualOperator(Token::Parse(Left, Memory, 3), Token::Parse(Right, Memory, 3));
+}
+Token* ParseNotEquality(char* Left, char* Right, Dictionary* Memory)
+{
+	Right[0] = '\0';
+	Right[1] = '\0';
+	Right += 2;
+	return new NotEqualOperator(Token::Parse(Left, Memory, 3), Token::Parse(Right, Memory, 3));
+}
+
+Token* ParseGrater(char* Left, char* Right, Dictionary* Memory)
+{
+	Right[0] = '\0';
+	Right++;
+	return new GraterOperator(Token::Parse(Left, Memory, 4), Token::Parse(Right, Memory, 4));
+}
+Token* ParseGraterOrEqual(char* Left, char* Right, Dictionary* Memory)
+{
+	Right[0] = '\0';
+	Right[1] = '\0';
+	Right+=2;
+	return new GraterOrEqualOperator(Token::Parse(Left, Memory, 4), Token::Parse(Right, Memory, 4));
+}
+Token* ParseLess(char* Left, char* Right, Dictionary* Memory)
+{
+	Right[0] = '\0';
+	Right++;
+	return new LessOperator(Token::Parse(Left, Memory, 4), Token::Parse(Right, Memory, 4));
+}
+Token* ParseLessrOrEqual(char* Left, char* Right, Dictionary* Memory)
+{
+	Right[0] = '\0';
+	Right[1] = '\0';
+	Right += 2;
+	return new LessOrEqualOperator(Token::Parse(Left, Memory, 4), Token::Parse(Right, Memory, 4));
+}
+
+Token* ParseAddition(char* Left, char* Right, Dictionary* Memory)
+{
+	Right[0] = '\0';
+	Right++;
+	return new AdditionOperator(Token::Parse(Left, Memory, 5), Token::Parse(Right, Memory, 5));
+}
+Token* ParseSubtraction(char* Left, char* Right, Dictionary* Memory)
+{
+	char* tmp = strstr(Right + 1, "-");
+	if (Left != Right || (Left == Right && tmp != NULL))
+	{
+		if (Left == Right)
+			Right = tmp;
+		Right[0] = '\0';
+		Right++;
+		return new SubtractionOperator(Token::Parse(Left, Memory, 5), Token::Parse(Right, Memory, 5));
+	}
+	else
+		return Token::Parse(Left, Memory, 6);
 }
 
 Token* ParseDivision(char* Left, char* Right, Dictionary* Memory)
@@ -74,7 +137,6 @@ Token* ParseDivision(char* Left, char* Right, Dictionary* Memory)
 	Right++;
 	return new DivisionOperator(Token::Parse(Left, Memory, 6), Token::Parse(Right, Memory, 6));
 }
-
 Token* ParseMuliplication(char* Left, char* Right, Dictionary* Memory)
 {
 	Right[0] = '\0';
@@ -87,37 +149,20 @@ Token* ParseModulo(char* Left, char* Right, Dictionary* Memory)
 	Right++;
 	return new ModuloOperator(Token::Parse(Left, Memory, 6), Token::Parse(Right, Memory, 6));
 }
-Token* ParseEquality(char* Left, char* Right, Dictionary* Memory)
-{
-	Right[0] = '\0';
-	Right[1] = '\0';
-	Right+=2;
-	return new EqualOperator(Token::Parse(Left, Memory, 3), Token::Parse(Right, Memory, 3));
-}
-Token* ParseNotEquality(char* Left, char* Right, Dictionary* Memory)
-{
-	Right[0] = '\0';
-	Right[1] = '\0';
-	Right+=2;
-	return new NotEqualOperator(Token::Parse(Left, Memory, 3), Token::Parse(Right, Memory, 3));
-}
-Token* ParseGrater(char* Left, char* Right, Dictionary* Memory)
+
+Token* ParseNot(char* Right, Dictionary* Memory)
 {
 	Right[0] = '\0';
 	Right++;
-	return new GraterOperator(Token::Parse(Left, Memory, 4), Token::Parse(Right, Memory, 4));
+	return new NotOperator(Token::Parse(Right, Memory, 7));
 }
-Token* ParseOr(char* Left, char* Right, Dictionary* Memory)
+Token* ParseMinus(char* Right, Dictionary* Memory)
 {
 	Right[0] = '\0';
 	Right++;
-	return new OrOperator(Token::Parse(Left, Memory, 1), Token::Parse(Right, Memory, 1));
-}
-Token* ParseLess(char* Left, char* Right, Dictionary* Memory)
-{
-	Right[0] = '\0';
-	Right++;
-	return new LessOperator(Token::Parse(Left, Memory, 4), Token::Parse(Right, Memory, 4));
+	if (Right[0] >= '0' && Right[0] <= '9')
+		return new Token((-1) * atoi(Right));
+	return new DecrementOperator(Token::Parse(Right, Memory, 7));
 }
 
 Token * Token::Parse(char * Expression, Dictionary* Memory, int Prioryty)
@@ -127,14 +172,15 @@ Token * Token::Parse(char * Expression, Dictionary* Memory, int Prioryty)
 	{
 		case 0:
 			if ((Right = strstr(Expression, "=")) && Right != strstr(Expression, "==") 
-				&& Right != strstr(Expression, "!=") + 1 
-				&& Right != strstr(Expression, ">=") + 1 && Right != strstr(Expression, "<=") + 1)
+				&& Right != strstr(Expression, "!=") + 1 && Right != strstr(Expression, ">=") + 1 
+				&& Right != strstr(Expression, "<=") + 1)
 				return ParseAssigment(Left, Right, Memory);
 		case 1:
 			if ((Right = strstr(Expression, "|")))
 				return ParseOr(Left, Right, Memory);
 		case 2:
-			if (Right = strstr(Expression, "&"));
+			if (Right = strstr(Expression, "&"))
+				return ParseAnd(Left, Right, Memory);
 		case 3:
 			if (Right = strstr(Expression, "!="))
 				return ParseNotEquality(Left, Right, Memory);
@@ -145,8 +191,10 @@ Token * Token::Parse(char * Expression, Dictionary* Memory, int Prioryty)
 				return ParseLess(Left, Right, Memory);
 			else if (Right = strstr(Expression, ">"))
 				return ParseGrater(Left, Right, Memory);
-			else if (Right = strstr(Expression, "<="));
-			else if (Right = strstr(Expression, ">="));
+			else if (Right = strstr(Expression, "<="))
+				return ParseLessrOrEqual(Left, Right, Memory);
+			else if (Right = strstr(Expression, ">="))
+				return ParseGraterOrEqual(Left, Right, Memory);
 		case 5:
 			if (Right = strstr(Expression, "+"))
 				return ParseAddition(Left, Right, Memory);
@@ -160,7 +208,10 @@ Token * Token::Parse(char * Expression, Dictionary* Memory, int Prioryty)
 			else if (Right = strstr(Expression, "%"))
 				return ParseModulo(Left, Right, Memory);
 		case 7:
-			if (Right = strstr(Expression, "!"));
+			if (Right = strstr(Expression, "!"))
+				return ParseNot(Right, Memory);
+			else if (Right = strstr(Expression, "-"))
+				return ParseMinus(Right, Memory);
 		default:
 			if (Expression[0] >= '0' && Expression[0] <= '9')
 				return new Token(atoi(Expression));
