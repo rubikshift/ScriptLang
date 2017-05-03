@@ -3,15 +3,8 @@
 class Token
 {
 public:
-	Token();
-	Token(int* Variable);
-	Token(int Value);
-	virtual ~Token();
-	virtual int* Value();
+	virtual int* Value() = 0;
 protected:
 	int* Limit;
-private:
-	bool IsConstant;
-	int* value;
 	
 };

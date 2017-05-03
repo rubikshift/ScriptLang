@@ -23,6 +23,8 @@
 #include "SubtractionOperator.h"
 #include "Parser.h"
 #include "Token.h"
+#include "Constant.h"
+#include "Variable.h"
 #include "Code.h"
 #include "If.h"
 #include "While.h"
@@ -187,7 +189,7 @@ Token* Parser::ParseMinus(char* Right, Dictionary* Memory, int* Limit)
 	Right[0] = '\0';
 	Right++;
 	if (isdigit(Right[0]))
-		return new Token((-1) * atoi(Right));
+		return new Constant((-1) * atoi(Right));
 	return new DecrementOperator(ParseToken(Right, Memory, Limit, 7), Limit);
 }
 
@@ -242,19 +244,43 @@ Token * Parser::ParseToken(char * Expression, Dictionary* Memory, int* Limit, in
 		RemoveWhiteCharactersFromBegining(&Expression);
 		RemoveWhiteCharactersFromEnd(&Expression);
 		if (isdigit(Expression[0]))
-			return new Token(atoi(Expression));
+			return new Constant(atoi(Expression));
 		else
-			return new Token(Memory->Search(Expression));
+			return new Variable(Expression, Memory);
 	}
 }
 
 Code* Parser::ParseWhile(Dictionary* Memory, int* Limit)
 {
-	return nullptr;
+	while (Buffer[EndOfToken] != '(')
+		EndOfToken++;
+	StartOfToken = ++EndOfToken;
+	while (Buffer[EndOfToken] != '{')
+		EndOfToken++;
+	while (Buffer[EndOfToken] != ')')
+		EndOfToken--;
+	Buffer[EndOfToken] = 0;
+	while (Buffer[EndOfToken] != '{')
+		EndOfToken++;
+	EndOfToken++;
+	Token* t = ParseToken(Buffer + StartOfToken, Memory, Limit);
+	return new While(t, ParseCode(Memory, Limit));
 }
 Code* Parser::ParseIf(Dictionary* Memory, int* Limit)
 {
-	return nullptr;
+	while (Buffer[EndOfToken] != '(')
+		EndOfToken++;
+	StartOfToken = ++EndOfToken;
+	while(Buffer[EndOfToken] != '{')
+		EndOfToken++;
+	while (Buffer[EndOfToken] != ')')
+		EndOfToken--;
+	Buffer[EndOfToken] = 0;
+	while (Buffer[EndOfToken] != '{')
+		EndOfToken++;
+	EndOfToken++;
+	Token* t = ParseToken(Buffer + StartOfToken, Memory, Limit);
+	return new If(t, ParseCode(Memory, Limit));
 }
 Code* Parser::ParseSingleExpression(Dictionary* Memory, int* Limit)
 {
@@ -272,11 +298,17 @@ Code* Parser::ParseSingleExpression(Dictionary* Memory, int* Limit)
 		else
 			AfterSkip = 0;
 		
-		if ((isdigit(BeforeSkip) || isalpha(BeforeSkip)) && (isdigit(AfterSkip) || isalpha(AfterSkip)))
+		if ((isdigit(BeforeSkip) || isalpha(BeforeSkip)) && 
+			(isdigit(AfterSkip) || isalpha(AfterSkip) || AfterSkip == '?' || AfterSkip == '@'))
 		{
 			Buffer[EndOfToken - 1] = 0;
 			break;
 		}
+	}
+	if (Buffer[EndOfToken] == '}')
+	{
+		Buffer[EndOfToken] = 0;
+		EndOfToken++;
 	}
 	return new Code(ParseToken(Buffer + StartOfToken, Memory, Limit));
 }
