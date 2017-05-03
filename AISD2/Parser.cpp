@@ -285,7 +285,6 @@ Code* Parser::ParseIf(Dictionary* Memory, int* Limit)
 Code* Parser::ParseSingleExpression(Dictionary* Memory, int* Limit)
 {
 	StartOfToken = EndOfToken;
-	EndOfToken++;
 	while (Buffer[EndOfToken] != '}' && Buffer[EndOfToken] != 0)
 	{
 		BeforeSkip = Buffer[EndOfToken];
@@ -307,8 +306,8 @@ Code* Parser::ParseSingleExpression(Dictionary* Memory, int* Limit)
 	}
 	if (Buffer[EndOfToken] == '}')
 	{
-		Buffer[EndOfToken] = 0;
-		EndOfToken++;
+		Buffer[EndOfToken-1] = 0;
+		//EndOfToken++;
 	}
 	return new Code(ParseToken(Buffer + StartOfToken, Memory, Limit));
 }
@@ -326,12 +325,14 @@ Code* Parser::ParseInstruction(Dictionary* Memory, int* Limit)
 Code * Parser::ParseCode(Dictionary* Memory, int* Limit)
 {
 	Code *p, *q;
+	SkipWhiteCharacters();
 	p = ParseInstruction(Memory, Limit);
-	while (Buffer[EndOfToken] != 0)
+	while (Buffer[EndOfToken] != '}' && Buffer[EndOfToken] != 0)
 	{
 		q = ParseInstruction(Memory, Limit);
 		p = new BlockOfCode(p, q);
 		SkipWhiteCharacters();
 	}
+	EndOfToken++;
 	return p;
 }

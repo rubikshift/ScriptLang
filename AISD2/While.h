@@ -11,4 +11,5 @@ private:
 	Token* Condition;
 	Code* Block;
 	int* Limit;
+	bool CheckLimit();
 };

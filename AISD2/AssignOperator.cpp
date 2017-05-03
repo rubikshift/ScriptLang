@@ -24,7 +24,10 @@ AssignOperator::~AssignOperator()
 int * AssignOperator::Value()
 {
 	if (*Limit <= 0)
+	{
+		Memory->Insert(VariableName, nullptr);
 		return nullptr;
+	}
 	(*Limit)--;
 	value = Memory->Insert(VariableName, Right->Value());
 	return value;

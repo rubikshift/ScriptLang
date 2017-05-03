@@ -17,9 +17,14 @@ While::~While()
 
 void While::Execute()
 {
-	if (*Limit <= 0)
-		return;
-	(*Limit)--;
-	while (Condition->Value() != nullptr)
+	while (CheckLimit() && Condition->Value() != nullptr)
 		Block->Execute();
+}
+
+bool While::CheckLimit()
+{
+	if (*Limit <= 0)
+		return false;
+	(*Limit)--;
+	return true;
 }
