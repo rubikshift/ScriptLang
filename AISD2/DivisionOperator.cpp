@@ -11,7 +11,7 @@ int * DivisionOperator::Value()
 	(*Limit)--;
 	int* rVal = Right->Value();
 	int* lVal = Left->Value();
-	if (rVal == nullptr || lVal == nullptr)
+	if (rVal == nullptr || lVal == nullptr || *rVal == 0)
 		return nullptr;
 	else return new int(*lVal / *rVal);
 }
