@@ -1,9 +1,10 @@
 #include "If.h"
 
-If::If(Token * Condition, Code * Block)
+If::If(Token * Condition, Code * Block, int* Limit)
 {
 	this->Condition = Condition;
 	this->Block = Block;
+	this->Limit = Limit;
 }
 
 If::~If()
@@ -16,6 +17,9 @@ If::~If()
 
 void If::Execute()
 {
+	if (*Limit <= 0)
+		return;
+	(*Limit)--;
 	if (Condition->Value() != nullptr)
 		Block->Execute();
 }

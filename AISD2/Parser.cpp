@@ -215,14 +215,14 @@ Token * Parser::ParseToken(char * Expression, Dictionary* Memory, int* Limit, in
 		else if (Right = strstr(Expression, "=="))
 			return ParseEquality(Left, Right, Memory, Limit);
 	case 4:
-		if (Right = strstr(Expression, "<"))
-			return ParseLess(Left, Right, Memory, Limit);
-		else if (Right = strstr(Expression, ">"))
-			return ParseGrater(Left, Right, Memory, Limit);
-		else if (Right = strstr(Expression, "<="))
+		if (Right = strstr(Expression, "<="))
 			return ParseLessrOrEqual(Left, Right, Memory, Limit);
 		else if (Right = strstr(Expression, ">="))
 			return ParseGraterOrEqual(Left, Right, Memory, Limit);
+		else if (Right = strstr(Expression, "<"))
+			return ParseLess(Left, Right, Memory, Limit);
+		else if (Right = strstr(Expression, ">"))
+			return ParseGrater(Left, Right, Memory, Limit);
 	case 5:
 		if (Right = strstr(Expression, "+"))
 			return ParseAddition(Left, Right, Memory, Limit);
@@ -264,7 +264,7 @@ Code* Parser::ParseWhile(Dictionary* Memory, int* Limit)
 		EndOfToken++;
 	EndOfToken++;
 	Token* t = ParseToken(Buffer + StartOfToken, Memory, Limit);
-	return new While(t, ParseCode(Memory, Limit));
+	return new While(t, ParseCode(Memory, Limit), Limit);
 }
 Code* Parser::ParseIf(Dictionary* Memory, int* Limit)
 {
@@ -280,7 +280,7 @@ Code* Parser::ParseIf(Dictionary* Memory, int* Limit)
 		EndOfToken++;
 	EndOfToken++;
 	Token* t = ParseToken(Buffer + StartOfToken, Memory, Limit);
-	return new If(t, ParseCode(Memory, Limit));
+	return new If(t, ParseCode(Memory, Limit), Limit);
 }
 Code* Parser::ParseSingleExpression(Dictionary* Memory, int* Limit)
 {

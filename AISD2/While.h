@@ -4,10 +4,11 @@
 class While : public Code
 {
 public:
-	While(Token* Condition, Code* Block);
+	While(Token* Condition, Code* Block, int* Limit);
 	~While();
 	virtual void Execute();
 private:
 	Token* Condition;
 	Code* Block;
+	int* Limit;
 };
