@@ -34,8 +34,9 @@ private:
 	Token* ParseNot(char* Right, Dictionary* Memory, int* Limit);
 	Token* ParseMinus(char* Right, Dictionary* Memory, int* Limit);
 	Token* ParseToken(char* Expression, Dictionary* Memory, int* Limit, int Prioryty = 0);
-	
-	Code* ParseBlock(Dictionary* Memory, int* Limit);
+
+	Code* ParseSingleExpression(Dictionary* Memory, int* Limit);
+	Code* ParseInstruction(Dictionary* Memory, int* Limit);
 	Code* ParseIf(Dictionary* Memory, int* Limit);
 	Code* ParseWhile(Dictionary* Memory, int* Limit);
 };

@@ -41,12 +41,8 @@ Parser::~Parser()
 
 void Parser::SkipWhiteCharacters()
 {
-	bool Skipped = false;
-	while (isspace(Buffer[EndOfToken]) && (Skipped = true))
+	while (isspace(Buffer[EndOfToken]))
 		EndOfToken++;
-	AfterSkip = Buffer[EndOfToken];
-	if (Skipped == false)
-		AfterSkip = 0;
 }
 
 void Parser::RemoveWhiteCharactersFromBegining(char** c)
@@ -260,26 +256,50 @@ Code* Parser::ParseIf(Dictionary* Memory, int* Limit)
 {
 	return nullptr;
 }
+Code* Parser::ParseSingleExpression(Dictionary* Memory, int* Limit)
+{
+	StartOfToken = EndOfToken;
+	EndOfToken++;
+	while (Buffer[EndOfToken] != '}' && Buffer[EndOfToken] != 0)
+	{
+		BeforeSkip = Buffer[EndOfToken];
+		EndOfToken++;
+		if (isspace(Buffer[EndOfToken]))
+		{
+			SkipWhiteCharacters();
+			AfterSkip = Buffer[EndOfToken];
+		}
+		else
+			AfterSkip = 0;
+		
+		if ((isdigit(BeforeSkip) || isalpha(BeforeSkip)) && (isdigit(AfterSkip) || isalpha(AfterSkip)))
+		{
+			Buffer[EndOfToken - 1] = 0;
+			break;
+		}
+	}
+	return new Code(ParseToken(Buffer + StartOfToken, Memory, Limit));
+}
+
+Code* Parser::ParseInstruction(Dictionary* Memory, int* Limit)
+{
+	if (Buffer[EndOfToken] == '?')
+		return ParseIf(Memory, Limit);
+	else if (Buffer[EndOfToken] == '@')
+		return ParseWhile(Memory, Limit);
+	else
+		return ParseSingleExpression(Memory, Limit);
+}
 
 Code * Parser::ParseCode(Dictionary* Memory, int* Limit)
 {
-	StartOfToken = EndOfToken;
-	Code* c;
+	Code *p, *q;
+	p = ParseInstruction(Memory, Limit);
 	while (Buffer[EndOfToken] != 0)
 	{
+		q = ParseInstruction(Memory, Limit);
+		p = new BlockOfCode(p, q);
 		SkipWhiteCharacters();
-		if ((isdigit(BeforeSkip) || isalpha(BeforeSkip)) && (isdigit(AfterSkip) || isalpha(AfterSkip))) 
-		{
-			Buffer[EndOfToken - 1] = 0;
-			c = new Code(ParseToken(Buffer + StartOfToken, Memory, Limit));
-			return new BlockOfCode(c, ParseCode(Memory, Limit));
-		}
-		if (isspace(Buffer[EndOfToken]) == 0)
-		{
-			BeforeSkip = Buffer[EndOfToken];
-			EndOfToken++;
-		}
 	}
-	c = new Code(ParseToken(Buffer + StartOfToken, Memory, Limit));
-	return c;
+	return p;
 }
