@@ -11,6 +11,16 @@ AssignOperator::AssignOperator(const char* VariableName, Token* Right, Dictionar
 	this->Memory = Memory;
 }
 
+AssignOperator::~AssignOperator()
+{
+	if (Right != nullptr)
+	{
+		delete Right;
+		Right = nullptr;
+	}
+	delete[] VariableName;
+}
+
 int * AssignOperator::Value()
 {
 	if (*Limit <= 0)

@@ -1,5 +1,5 @@
 #include <cstdlib>
-#include <cstdio>
+#include <iostream>
 #include <cstring>
 #include "Token.h"
 #include "Operator.h"
@@ -21,28 +21,25 @@
 #include "OrOperator.h"
 #include "SubtractionOperator.h"
 #include "Dictionary.h"
-
+#include "Parser.h"
+#include "Code.h"
 int main()
 {
 	auto Root = new Node('a');
 	auto Memory = new Dictionary(Root);
-	char Data[1000];
 	char *tmp, *Variables = new char[1000];
-	int Limit = 0, *Value;
-	Token* token;
-	int* var;
-	fgets(Data, 1000, stdin);
-	sscanf(Data, "%d", &Limit);
-	fgets(Variables, 1000, stdin);
-	while(Limit > 0)
-	{
-		scanf("%s", Data);
-		token = Token::Parse(Data, Memory, &Limit);
-		token->Value();
-	}
+	int Limit = 0, LimitAtStart = 0, *Value;
+	
+	std::cin.getline(Variables, 1000);
+	sscanf(Variables, "%d", &Limit);
+	LimitAtStart = Limit;
+	std::cin.getline(Variables, 1000);
 
-	tmp = strstr(Variables, "\n");
-	tmp[0] = 0;
+	Parser* P = new Parser();
+	Code* Program;
+	Program = P->ParseCode(Memory, &Limit);
+	Program->Execute();
+	printf("%d\n", LimitAtStart-Limit);
 	while (Variables != NULL)
 	{
 		tmp = Variables;
@@ -58,8 +55,9 @@ int main()
 		else
 			printf("%s %s\n", tmp, "Nul");
 	}
-	system("pause");
-	delete token;
+	delete P;
+	delete Program;
+	delete Variables;
 	delete Root;
 	delete Memory;
 }

@@ -5,6 +5,7 @@ class AssignOperator : public Operator
 {
 public:
 	AssignOperator(const char* VariableName, Token* Right, Dictionary* Memory, int* Limit);
+	virtual ~AssignOperator();
 	virtual int* Value() override;
 private:
 	int* value;
