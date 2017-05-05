@@ -6,6 +6,7 @@ public:
 	Variable(const char* VariableName, Dictionary* Memory);
 	virtual ~Variable();
 	virtual int* Value();
+	virtual int* Insert(int* value);
 private:
 	char* VariableName;
 	Dictionary* Memory;

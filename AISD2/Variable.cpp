@@ -17,3 +17,8 @@ int * Variable::Value()
 {
 	return Memory->Search(VariableName);
 }
+
+int* Variable::Insert(int * value)
+{
+	return Memory->Insert(VariableName, value);
+}

@@ -36,9 +36,6 @@
     <ClInclude Include="AssignOperator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DecrementOperator.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="NotOperator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -100,6 +97,15 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Constant.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Stack.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Operators.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MinusOperator.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -164,9 +170,6 @@
     <ClCompile Include="LessOrEqualOperator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="DecrementOperator.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="Code.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -186,6 +189,9 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="Constant.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="MinusOperator.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

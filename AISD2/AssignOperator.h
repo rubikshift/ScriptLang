@@ -1,14 +1,12 @@
 #pragma once
 #include "BinaryOperator.h"
 #include "Dictionary.h"
-class AssignOperator : public Operator
+class AssignOperator : public BinaryOperator
 {
 public:
-	AssignOperator(const char* VariableName, Token* Right, Dictionary* Memory, int* Limit);
-	virtual ~AssignOperator();
+	AssignOperator(Token* Variable, Token* Right, int* Limit);
 	virtual int* Value() override;
 private:
 	int* value;
-	char* VariableName;
 	Dictionary* Memory;
 };

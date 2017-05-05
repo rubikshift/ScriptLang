@@ -7,7 +7,7 @@
 #include "AdditionOperator.h"
 #include "AndOperator.h"
 #include "AssignOperator.h"
-#include "DecrementOperator.h"
+#include "MinusOperator.h"
 #include "DivisionOperator.h"
 #include "EqualOperator.h"
 #include "GraterOperator.h"

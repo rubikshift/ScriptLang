@@ -1,7 +1,8 @@
 #pragma once
 #include "Token.h"
 #include "Code.h"
-
+#include "Stack.h"
+#include "Operators.h"
 class Parser
 {
 public:
@@ -10,6 +11,8 @@ public:
 	Code* ParseCode(Dictionary* Memory, int* Limit);
 
 private:
+	Stack<Token*>* RPNStack;
+	Stack<Operators>* OperatorsStack;
 	char* Buffer;
 	char BeforeSkip, AfterSkip;
 	int StartOfToken, EndOfToken;
@@ -17,23 +20,11 @@ private:
 	void SkipWhiteCharacters();
 	void RemoveWhiteCharactersFromBegining(char** c);
 	void RemoveWhiteCharactersFromEnd(char** c);
-	Token* ParseAssigment(char* Left, char* Right, Dictionary* Memory, int* Limit);
-	Token* ParseOr(char* Left, char* Right, Dictionary* Memory, int* Limit);
-	Token* ParseAnd(char* Left, char* Right, Dictionary* Memory, int* Limit);
-	Token* ParseEquality(char* Left, char* Right, Dictionary* Memory, int* Limit);
-	Token* ParseNotEquality(char* Left, char* Right, Dictionary* Memory, int* Limit);
-	Token* ParseGrater(char* Left, char* Right, Dictionary* Memory, int* Limit);
-	Token* ParseGraterOrEqual(char* Left, char* Right, Dictionary* Memory, int* Limit);
-	Token* ParseLess(char* Left, char* Right, Dictionary* Memory, int* Limit);
-	Token* ParseLessrOrEqual(char* Left, char* Right, Dictionary* Memory, int* Limit);
-	Token* ParseAddition(char* Left, char* Right, Dictionary* Memory, int* Limit);
-	Token* ParseSubtraction(char* Left, char* Right, Dictionary* Memory, int* Limit);
-	Token* ParseDivision(char* Left, char* Right, Dictionary* Memory, int* Limit);
-	Token* ParseMuliplication(char* Left, char* Right, Dictionary* Memory, int* Limit);
-	Token* ParseModulo(char* Left, char* Right, Dictionary* Memory, int* Limit);
-	Token* ParseNot(char* Right, Dictionary* Memory, int* Limit);
-	Token* ParseMinus(char* Right, Dictionary* Memory, int* Limit);
-	Token* ParseToken(char* Expression, Dictionary* Memory, int* Limit, int Prioryty = 0);
+	int OperatorPrioryty(Operators O);
+	Token* ParseExpression(char* Expression, Dictionary* Memory, int* Limit, int Prioryty = 0);
+	Token* ParseToken(char* T, Dictionary* Memory);
+	void ParseOperator(Operators O, int* Limit);
+	void GenerateTokenOnStack(Operators O, int* Limit);
 
 	Code* ParseSingleExpression(Dictionary* Memory, int* Limit);
 	Code* ParseInstruction(Dictionary* Memory, int* Limit);

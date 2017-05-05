@@ -145,7 +145,7 @@
     <ClInclude Include="BlockOfCode.h" />
     <ClInclude Include="Code.h" />
     <ClInclude Include="Constant.h" />
-    <ClInclude Include="DecrementOperator.h" />
+    <ClInclude Include="MinusOperator.h" />
     <ClInclude Include="Dictionary.h" />
     <ClInclude Include="DivisionOperator.h" />
     <ClInclude Include="EqualOperator.h" />
@@ -161,8 +161,10 @@
     <ClInclude Include="NotEqualOperator.h" />
     <ClInclude Include="NotOperator.h" />
     <ClInclude Include="Operator.h" />
+    <ClInclude Include="Operators.h" />
     <ClInclude Include="OrOperator.h" />
     <ClInclude Include="Parser.h" />
+    <ClInclude Include="Stack.h" />
     <ClInclude Include="SubtractionOperator.h" />
     <ClInclude Include="AdditionOperator.h" />
     <ClInclude Include="Token.h" />
@@ -177,7 +179,7 @@
     <ClCompile Include="BlockOfCode.cpp" />
     <ClCompile Include="Code.cpp" />
     <ClCompile Include="Constant.cpp" />
-    <ClCompile Include="DecrementOperator.cpp" />
+    <ClCompile Include="MinusOperator.cpp" />
     <ClCompile Include="Dictionary.cpp" />
     <ClCompile Include="DivisionOperator.cpp" />
     <ClCompile Include="EqualOperator.cpp" />
