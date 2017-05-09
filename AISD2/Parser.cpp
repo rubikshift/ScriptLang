@@ -36,7 +36,7 @@ Parser::Parser() : BeforeSkip(0), AfterSkip(0), StartOfToken(0), EndOfToken(0)
 	Buffer = new char[2000];
 	RPNStack = new Stack<Token*>();
 	OperatorsStack = new Stack<Operators>();
-	std::cin.getline(Buffer, 2000, NULL);
+	std::cin.get(Buffer, 2000, NULL);
 }
 
 Parser::~Parser()
@@ -101,7 +101,6 @@ Token* Parser::ParseToken(char* T, Dictionary* Memory)
 	{
 		T[0] = 0;
 		T++;
-		int i = atoi(T);
 		return new Constant((-1)* atoi(T));
 	}
 	else
