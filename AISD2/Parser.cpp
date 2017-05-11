@@ -31,12 +31,14 @@
 #include "BlockOfCode.h"
 #include "Stack"
 
+#define BUFFER_SIZE 75000
+
 Parser::Parser() : BeforeSkip(0), AfterSkip(0), StartOfToken(0), EndOfToken(0)
 {
-	Buffer = new char[2000];
+	Buffer = new char[BUFFER_SIZE];
 	RPNStack = new Stack<Token*>();
 	OperatorsStack = new Stack<Operators>();
-	std::cin.get(Buffer, 2000, NULL);
+	std::cin.get(Buffer, BUFFER_SIZE, NULL);
 }
 
 Parser::~Parser()
@@ -67,25 +69,25 @@ void Parser::RemoveWhiteCharactersFromEnd(char ** c)
 
 int Parser::OperatorPrioryty(Operators O)
 {
-	switch(O)
+	switch (O)
 	{
-		case ASSIGN: return 0;
-		case OR: return 1;
-		case AND: return 2;
-		case NOT_EQUAL:
-		case EQUAL: return 3;
-		case GRATER:
-		case LESS:
-		case GRATER_OR_EQUAL:
-		case LESS_OR_EQUAL: return 4;
-		case ADDITION: return 5;
-		case SUBTRACTION: return 6;
-		case MULTIPLICATION:
-		case DIVISION:
-		case MODULO: return 7;
-		case NOT:
-		case MINUS: return 8;
-		default: return -1;
+	case ASSIGN: return 0;
+	case OR: return 1;
+	case AND: return 2;
+	case NOT_EQUAL:
+	case EQUAL: return 3;
+	case GRATER:
+	case LESS:
+	case GRATER_OR_EQUAL:
+	case LESS_OR_EQUAL: return 4;
+	case ADDITION: return 5;
+	case SUBTRACTION: return 6;
+	case MULTIPLICATION:
+	case DIVISION:
+	case MODULO: return 7;
+	case NOT:
+	case MINUS: return 8;
+	default: return -1;
 	}
 }
 
@@ -151,7 +153,7 @@ void Parser::GenerateTokenOnStack(Operators O, int* Limit)
 
 void Parser::ParseOperator(Operators O, int* Limit)
 {
-	if(O == OPENING_BRACKET)
+	if (O == OPENING_BRACKET)
 		OperatorsStack->Push(O);
 	else if (O == CLOSING_BRACKET)
 	{
@@ -177,31 +179,31 @@ Token * Parser::ParseExpression(char * Expression, Dictionary* Memory, int* Limi
 	{
 		while (isalpha(Expression[i]) || isdigit(Expression[i])) i++;
 		while (isspace(Expression[i])) i++;
-		if (Expression + i == strstr(Expression + q, "("))
+		if (Expression[i] == '(')
 		{
 			Expression[i] = '\0';
 			ParseOperator(OPENING_BRACKET, Limit);
 			q = ++i;
 		}
-		else if (Expression + i == strstr(Expression + q, ")"))
-		{
-				Expression[i] = '\0';
-				T = ParseToken(Expression + q, Memory);
-				if (T != nullptr) RPNStack->Push(T);
-				ParseOperator(CLOSING_BRACKET, Limit);
-				q = ++i;
-		}
-		else if (Expression + i == strstr(Expression + q, "=") && Expression + i != strstr(Expression+q, "==")
-			&& Expression + i != strstr(Expression+q, "!=") + 1 && Expression + i != strstr(Expression+q, ">=") + 1
-			&& Expression + i != strstr(Expression+q, "<=") + 1)
+		else if (Expression[i] == ')')
 		{
 			Expression[i] = '\0';
 			T = ParseToken(Expression + q, Memory);
-			if(T != nullptr) RPNStack->Push(T);
+			if (T != nullptr) RPNStack->Push(T);
+			ParseOperator(CLOSING_BRACKET, Limit);
+			q = ++i;
+		}
+		else if (Expression[i] == '=' && (Expression[i + 1] != '='
+			&& Expression[i - 1] != '!' && Expression[i - 1] != '>'
+			&& Expression[i - 1] != '<'))
+		{
+			Expression[i] = '\0';
+			T = ParseToken(Expression + q, Memory);
+			if (T != nullptr) RPNStack->Push(T);
 			ParseOperator(ASSIGN, Limit);
 			q = ++i;
 		}
-		else if (Expression + i == strstr(Expression + q, "|"))
+		else if (Expression[i] == '|')
 		{
 			Expression[i] = '\0';
 			T = ParseToken(Expression + q, Memory);
@@ -209,7 +211,7 @@ Token * Parser::ParseExpression(char * Expression, Dictionary* Memory, int* Limi
 			ParseOperator(OR, Limit);
 			q = ++i;
 		}
-		else if (Expression + i == strstr(Expression + q, "&"))
+		else if (Expression[i] == '&')
 		{
 			Expression[i] = '\0';
 			T = ParseToken(Expression + q, Memory);
@@ -217,17 +219,17 @@ Token * Parser::ParseExpression(char * Expression, Dictionary* Memory, int* Limi
 			ParseOperator(AND, Limit);
 			q = ++i;
 		}
-		else if (Expression + i == strstr(Expression + q, "!="))
+		else if (Expression[i] == '!' && Expression[i + 1] == '=')
 		{
 			Expression[i] = '\0';
-			Expression[i+1] = '\0';
+			Expression[i + 1] = '\0';
 			T = ParseToken(Expression + q, Memory);
 			if (T != nullptr) RPNStack->Push(T);
 			ParseOperator(NOT_EQUAL, Limit);
 			i += 2;
 			q = i;
 		}
-		else if (Expression + i == strstr(Expression + q, "=="))
+		else if (Expression[i] == '=' && Expression[i + 1] == '=')
 		{
 			Expression[i] = '\0';
 			Expression[i + 1] = '\0';
@@ -237,7 +239,7 @@ Token * Parser::ParseExpression(char * Expression, Dictionary* Memory, int* Limi
 			i += 2;
 			q = i;
 		}
-		else if (Expression + i == strstr(Expression + q, ">="))
+		else if (Expression[i] == '>' && Expression[i + 1] == '=')
 		{
 			Expression[i] = '\0';
 			Expression[i + 1] = '\0';
@@ -247,7 +249,7 @@ Token * Parser::ParseExpression(char * Expression, Dictionary* Memory, int* Limi
 			i += 2;
 			q = i;
 		}
-		else if (Expression + i == strstr(Expression + q, "<="))
+		else if (Expression[i] == '<' && Expression[i + 1] == '=')
 		{
 			Expression[i] = '\0';
 			Expression[i + 1] = '\0';
@@ -257,7 +259,7 @@ Token * Parser::ParseExpression(char * Expression, Dictionary* Memory, int* Limi
 			i += 2;
 			q = i;
 		}
-		else if (Expression + i == strstr(Expression + q, ">"))
+		else if (Expression[i] == '>')
 		{
 			Expression[i] = '\0';
 			T = ParseToken(Expression + q, Memory);
@@ -265,7 +267,7 @@ Token * Parser::ParseExpression(char * Expression, Dictionary* Memory, int* Limi
 			ParseOperator(GRATER, Limit);
 			q = ++i;
 		}
-		else if (Expression + i == strstr(Expression + q, "<"))
+		else if (Expression[i] == '<')
 		{
 			Expression[i] = '\0';
 			T = ParseToken(Expression + q, Memory);
@@ -273,7 +275,7 @@ Token * Parser::ParseExpression(char * Expression, Dictionary* Memory, int* Limi
 			ParseOperator(LESS, Limit);
 			q = ++i;
 		}
-		else if (Expression + i == strstr(Expression + q, "+"))
+		else if (Expression[i] == '+')
 		{
 			Expression[i] = '\0';
 			T = ParseToken(Expression + q, Memory);
@@ -281,7 +283,7 @@ Token * Parser::ParseExpression(char * Expression, Dictionary* Memory, int* Limi
 			ParseOperator(ADDITION, Limit);
 			q = ++i;
 		}
-		else if (Expression + i == strstr(Expression + q, "-"))
+		else if (Expression[i] == '-')
 		{
 			Expression[i] = '\0';
 			T = ParseToken(Expression + q, Memory);
@@ -290,7 +292,7 @@ Token * Parser::ParseExpression(char * Expression, Dictionary* Memory, int* Limi
 				ParseOperator(MINUS, Limit);
 				q = ++i;
 			}
-			else if ((T == nullptr && Expression[i + 1] == '-') || ( q != i && T != nullptr))
+			else if ((T == nullptr && Expression[i + 1] == '-') || (q != i && T != nullptr))
 			{
 				Expression[i] = '\0';
 				if (T != nullptr) RPNStack->Push(T);
@@ -303,7 +305,7 @@ Token * Parser::ParseExpression(char * Expression, Dictionary* Memory, int* Limi
 				++i;
 			}
 		}
-		else if (Expression + i == strstr(Expression + q, "/"))
+		else if (Expression[i] == '/')
 		{
 			Expression[i] = '\0';
 			T = ParseToken(Expression + q, Memory);
@@ -311,7 +313,7 @@ Token * Parser::ParseExpression(char * Expression, Dictionary* Memory, int* Limi
 			ParseOperator(DIVISION, Limit);
 			q = ++i;
 		}
-		else if (Expression + i == strstr(Expression + q, "*"))
+		else if (Expression[i] == '*')
 		{
 			Expression[i] = '\0';
 			T = ParseToken(Expression + q, Memory);
@@ -319,7 +321,7 @@ Token * Parser::ParseExpression(char * Expression, Dictionary* Memory, int* Limi
 			ParseOperator(MULTIPLICATION, Limit);
 			q = ++i;
 		}
-		else if (Expression + i == strstr(Expression + q, "%"))
+		else if (Expression[i] == '%')
 		{
 			Expression[i] = '\0';
 			T = ParseToken(Expression + q, Memory);
@@ -327,7 +329,7 @@ Token * Parser::ParseExpression(char * Expression, Dictionary* Memory, int* Limi
 			ParseOperator(MODULO, Limit);
 			q = ++i;
 		}
-		else if (Expression + i == strstr(Expression + q, "!"))
+		else if (Expression[i] == '!')
 		{
 			Expression[i] = '\0';
 			ParseOperator(NOT, Limit);
@@ -346,7 +348,7 @@ Token * Parser::ParseExpression(char * Expression, Dictionary* Memory, int* Limi
 		T = ParseToken(Expression + q, Memory);
 		if (T != nullptr) RPNStack->Push(T);
 	}
-	while(!OperatorsStack->IsEmpty())
+	while (!OperatorsStack->IsEmpty())
 		GenerateTokenOnStack(OperatorsStack->Pop(), Limit);
 
 	return RPNStack->Pop();
@@ -373,7 +375,7 @@ Code* Parser::ParseIf(Dictionary* Memory, int* Limit)
 	while (Buffer[EndOfToken] != '(')
 		EndOfToken++;
 	StartOfToken = ++EndOfToken;
-	while(Buffer[EndOfToken] != '{')
+	while (Buffer[EndOfToken] != '{')
 		EndOfToken++;
 	while (Buffer[EndOfToken] != ')')
 		EndOfToken--;
@@ -398,7 +400,7 @@ Code* Parser::ParseSingleExpression(Dictionary* Memory, int* Limit)
 		}
 		else
 			AfterSkip = 0;
-		
+
 		if ((isdigit(BeforeSkip) || isalpha(BeforeSkip) || BeforeSkip == ')') &&
 			(isdigit(AfterSkip) || isalpha(AfterSkip) || AfterSkip == '?' || AfterSkip == '@' || AfterSkip == '('))
 		{

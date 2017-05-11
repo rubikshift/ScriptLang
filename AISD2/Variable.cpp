@@ -15,7 +15,10 @@ Variable::~Variable()
 
 int * Variable::Value()
 {
-	return Memory->Search(VariableName);
+	int* R = Memory->Search(VariableName);
+	if (R)
+		return new int(*R);
+	else return nullptr;
 }
 
 int* Variable::Insert(int * value)

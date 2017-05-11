@@ -149,7 +149,6 @@
     <ClInclude Include="Dictionary.h" />
     <ClInclude Include="DivisionOperator.h" />
     <ClInclude Include="EqualOperator.h" />
-    <ClInclude Include="Expression.h" />
     <ClInclude Include="GraterOperator.h" />
     <ClInclude Include="GraterOrEqualOperator.h" />
     <ClInclude Include="If.h" />

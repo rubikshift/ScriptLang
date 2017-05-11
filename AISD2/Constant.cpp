@@ -12,5 +12,5 @@ Constant::~Constant()
 
 int * Constant::Value()
 {
-	return value;
+	return new int(*value);
 }

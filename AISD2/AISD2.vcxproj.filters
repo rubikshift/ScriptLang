@@ -21,9 +21,6 @@
     <ClInclude Include="Dictionary.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Expression.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Token.h">
       <Filter>Header Files</Filter>
     </ClInclude>

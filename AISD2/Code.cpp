@@ -19,7 +19,7 @@ Code::Code(Token * LineOfCode)
 
 Code::~Code()
 {
-	if(LineOfCode != nullptr)
+	if (LineOfCode != nullptr)
 		delete LineOfCode;
 }
 

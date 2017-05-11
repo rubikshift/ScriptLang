@@ -2,22 +2,39 @@
 #include "AssignOperator.h"
 
 
-AssignOperator::AssignOperator(Token* Variable, Token* Right, int* Limit)
+AssignOperator::AssignOperator(Token* Variable, Token* Right, int* Limit) : BinaryOperator(Variable, Right, Limit)
 {
-	this->Right = Right;
-	this->Left = Variable;
-	this->Limit = Limit;
-	this->Memory = Memory;
+}
+
+AssignOperator::~AssignOperator()
+{
+	if (Left != nullptr)
+	{
+		delete Left;
+		Left = nullptr;
+	}
+	if (Right != nullptr)
+	{
+		delete Right;
+		Right = nullptr;
+	}
 }
 
 int * AssignOperator::Value()
 {
+	int* rVal = Right->Value();
+	Left->Insert(rVal);
 	if (*Limit <= 0)
 	{
-		Left->Insert(nullptr);
+		if (rVal != nullptr)
+			delete rVal;
 		return nullptr;
 	}
 	(*Limit)--;
-	value = Left->Insert(Right->Value());
-	return value;
+	if (rVal == nullptr)
+		return nullptr;
+	int* R = new int(*rVal);
+	delete rVal;
+	return R;
+
 }

@@ -4,14 +4,43 @@ DivisionOperator::DivisionOperator(Token * Left, Token * Right, int* Limit) : Bi
 {
 }
 
+DivisionOperator::~DivisionOperator()
+{
+	if (Left != nullptr)
+	{
+		delete Left;
+		Left = nullptr;
+	}
+	if (Right != nullptr)
+	{
+		delete Right;
+		Right = nullptr;
+	}
+}
+
 int * DivisionOperator::Value()
 {
-	if (*Limit <= 0)
-		return nullptr;
-	(*Limit)--;
 	int* rVal = Right->Value();
 	int* lVal = Left->Value();
-	if (rVal == nullptr || lVal == nullptr || *rVal == 0)
+	if (*Limit <= 0)
+	{
+		if (rVal != nullptr)
+			delete rVal;
+		if (lVal != nullptr)
+			delete lVal;
 		return nullptr;
-	else return new int(*lVal / *rVal);
+	}
+	(*Limit)--;
+	if (rVal == nullptr || lVal == nullptr || *rVal == 0)
+	{
+		if (rVal != nullptr)
+			delete rVal;
+		if (lVal != nullptr)
+			delete lVal;
+		return nullptr;
+	}
+	int* R = new int(*lVal / *rVal);
+	delete rVal;
+	delete lVal;
+	return R;
 }

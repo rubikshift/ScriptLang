@@ -29,7 +29,7 @@ int main()
 	auto Memory = new Dictionary(Root);
 	char *tmp, *Variables = new char[1000];
 	int Limit = 0, LimitAtStart = 0, *Value;
-	
+
 	std::cin.getline(Variables, 1000);
 	sscanf(Variables, "%d", &Limit);
 	LimitAtStart = Limit;
@@ -39,7 +39,7 @@ int main()
 	Code* Program;
 	Program = P->ParseCode(Memory, &Limit);
 	Program->Execute();
-	printf("%d\n", LimitAtStart-Limit);
+	printf("%d\n", LimitAtStart - Limit);
 	while (Variables != NULL)
 	{
 		tmp = Variables;
@@ -49,6 +49,8 @@ int main()
 			Variables[0] = 0;
 			Variables++;
 		}
+		if (tmp[0] == 0 || tmp[0] == ' ')
+			break;
 		Value = Memory->Search(tmp);
 		if (Value != nullptr)
 			printf("%s %d\n", tmp, *Value);

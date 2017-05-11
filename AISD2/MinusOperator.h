@@ -5,5 +5,6 @@ class MinusOperator : public Operator
 {
 public:
 	MinusOperator(Token* Right, int* Limit);
+	virtual ~MinusOperator();
 	virtual int* Value();
 };
